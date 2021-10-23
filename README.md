@@ -17,9 +17,9 @@ sudo ln fanboost.py /usr/bin/fanboost
 3. Run `fanboost --help` for usage.
   
   
-# 华硕飞行堡垒笔记本风扇狂暴模式控制器
+# 飞行堡垒风扇狂暴模式控制器
 在Linux平台上，华硕飞行堡垒笔记本默认以安静模式运行。在此模式下，无论CPU和GPU负载多高，风扇都只会以低速运行。这造成的结果就是跑高负载任务的时候很容易降频。  
-此脚本通过修改 `/sys/class/hwmon/hwmon5/device/fan_boost_mode` 的值开关风扇“狂暴”模式，__这需要root权限来操作__。
+此脚本通过修改 `/sys/class/hwmon/hwmon5/device/fan_boost_mode` 的值开关风扇“狂暴”模式，__这需要`root`权限来操作__。
   
   
 我只能确定此工具在我的飞行堡垒FX504GM（国内FX80GM）上正常运行。如果你的其他飞行堡垒机型没法正常使用，可以尝试找到正确的配置文件路径并修改脚本中的值。
