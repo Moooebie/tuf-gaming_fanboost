@@ -47,7 +47,7 @@ elif (arg=='on'):
 	stat()
 
 elif (arg=='off'):
-	print('Turning of fan_boost_mode...')
+	print('Turning off fan_boost_mode...')
 	os.system(r'sudo bash -c "echo 0 > /sys/class/hwmon/hwmon5/device/fan_boost_mode"')
 	stat()
 
