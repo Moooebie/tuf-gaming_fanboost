@@ -2,20 +2,31 @@
 import os
 import sys
 
+# Path of the fan_boost_mode config
+path = r'/sys/devices/platform/asus-nb-wmi/fan_boost_mode'
+try:
+	f=open(path, mode='r')
+except FileNotFoundError:
+	print('Config file "', path, '" does not exist!', sep='')
+	sys.exit(1)
+finally:
+	f.close()
+
 def stat():
-	print('Status: ', end='')
-	status = os.popen(r'cat /sys/class/hwmon/hwmon5/device/fan_boost_mode').read()
+	print('Path:', path, sep='\t')
+	print('Status:\t', end='')
+	status = os.popen(f'cat {path}').read()
 	if(status=='0\n'):
 		print('DISABLED')
 	elif(status=='1\n'):
 		print('ENABLED')
 	else:
-		print('UNKNOWN STATUS!\n\t', status)
+		print('UNKNOWN STATUS! [', status, ']', sep='')
 
 
 def help():
 	print ("""Fan_Boost_Mode Controller for ASUS TUF GAMING Laptops.
-Version 1.0
+Version 1.1
 By Moebie Wu
 
 Usage:	fanboost [subcommand]
@@ -31,29 +42,25 @@ Available Subcommands:
   status	Show the status of Fan Noost Mode.
 	""")
 
+
 if(len(sys.argv)==2):
 	arg = sys.argv[1]
-
 else:
 	help()
-	quit()
+	sys.exit(0)
 
 if (arg=='status'):
 	stat()
-
 elif (arg=='on'):
 	print('Turning on fan_boost_mode...')
-	os.system(r'sudo bash -c "echo 1 > /sys/class/hwmon/hwmon5/device/fan_boost_mode"')
+	os.system(f'sudo bash -c "echo 1 > {path}"')
 	stat()
-
 elif (arg=='off'):
 	print('Turning off fan_boost_mode...')
-	os.system(r'sudo bash -c "echo 0 > /sys/class/hwmon/hwmon5/device/fan_boost_mode"')
+	os.system(f'sudo bash -c "echo 0 > {path}"')
 	stat()
-
 elif (arg=='help' or arg=='--help' or arg=='-h'):
 	help()
-
 else:
 	print('Invalid argument(s). Use "fanboost --help" for usage.\n')
 	help()
